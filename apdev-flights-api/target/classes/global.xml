@@ -26,10 +26,11 @@ http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/cu
     <configuration defaultExceptionStrategy-ref="implementationChoice_Exception_Strategy" doc:name="Configuration">
         <http:config useTransportForUris="false"/>
     </configuration>
+    <payload-type-filter expectedType="java.util.List" name="Filter_Not_List" doc:name="Payload"/>
 	<choice-exception-strategy name="implementationChoice_Exception_Strategy"
 		>
 		<catch-exception-strategy doc:name="No Flights DW Exception"
-			when="#[exception.causeMatches('com.mulesoft.weave')]">
+			when="#[exception.causeMatches('com.mulesoft.weave.*') || exception.message=='Payload is empty.']">
 			<set-payload value="No Flights to #[flowVars.code + '\n' + exception]"
 				doc:name="Set Payload" />
 			<set-property propertyName="http.status" value="400"
