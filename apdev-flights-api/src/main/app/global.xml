@@ -24,7 +24,17 @@ http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/cu
 		wsdlLocation="http://mu.mulesoft-training.com/essentials/delta?wsdl"
 		doc:name="Web Service Consumer" />
     <configuration defaultExceptionStrategy-ref="implementationChoice_Exception_Strategy" doc:name="Configuration">
-        <http:config useTransportForUris="false"/>
+        <expression-language>
+        	<global-functions>
+        		def getNumSeats(pType) {
+        			if (pType.contains("737")) {
+        				return 150;
+       				} else {
+        				return 300;
+       				}
+        		}
+        	</global-functions>
+        </expression-language>
     </configuration>
     <payload-type-filter expectedType="java.util.List" name="Filter_Not_List" doc:name="Payload"/>
 	<choice-exception-strategy name="implementationChoice_Exception_Strategy"
